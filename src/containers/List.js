@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Card from "../components/Card/Card";
 
 //const UrlBase = "assets/data.json"
@@ -10,6 +10,8 @@ class List extends React.Component {
 
         this.state = {
             data: [],
+            searchTerm: "",
+            error:"",
             isFetch: true
         }
     }
@@ -17,7 +19,7 @@ class List extends React.Component {
     async componentDidMount () {
         const response = await fetch(`${API}&s=batman`)
         const responseJson = await response.json()
-        console.log(responseJson.Search)
+        //console.log(responseJson.Search)
         this.setState ({ data: responseJson.Search, isFetch: false })
 
         /* fetch("assets/data.json")
@@ -27,16 +29,43 @@ class List extends React.Component {
                 console.log("Error: " + err)}) */
     } 
 
+
+    async handleSubmit(e){
+        e.preventDefault()
+        if(!this.state.searchTerm){
+            return this.setState({error: "Texto invalido"})
+        }
+        
+        const res = await fetch(`${API}&s=${this.state.searchTerm}`)
+        const data = await res.json()
+        //console.log(data.Search)
+        this.setState ({ data: data.Search, isFetch: false })
+
+    }
     render() {
         
         return (
-            <div className="row">
-            {
-                this.state.data.map(movie => {
-                    return <Card key={movie.imdbID} movie = {movie} />
-                })
-            }
-            </div>  
+            <Fragment>
+                <div className="row">
+                    <div className="col-md-4 offser-md-4 p-4">
+                        <form onSubmit={(e) => this.handleSubmit(e)}>
+                            <input type="text" className="form-control" placeholder="Search..."
+                                    onChange={e => this.setState({searchTerm: e.target.value})}
+                                    autoFocus
+                            />
+                        </form>
+                        <p className="text-white">{this.state.error ? this.state.error : "" }</p>
+                    </div>
+                </div>
+                <div className="row">
+                {
+                    this.state.data.map(movie => {
+                        return <Card key={movie.imdbID} movie = {movie} />
+                    })
+                }
+                </div> 
+            </Fragment>
+             
         )
            
     }
