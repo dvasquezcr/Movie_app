@@ -1,0 +1,8 @@
+instalar Bootstrap -> variable 
+
+npm i bootswatch --save
+
+En index.js 
+import "bootswatch/dist/lux/bootstrap.min.css";
+
+en dist se encuentran todos los estilos distintos
