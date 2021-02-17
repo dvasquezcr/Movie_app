@@ -1,4 +1,4 @@
-
+-------------------------------------------------
 instalar Bootstrap -> variable 
 
 	npm i bootswatch --save
@@ -13,11 +13,27 @@ Instalar Lint para verificar código de la APP
 
 Instalar PropTypes para validar
 	npm i prop-types
-
+-------------------------------------------------
 Compilar
-	npm run production Or npm run build
+	//si se creo desde cero
+	npm run production  
 
-npm install -g serve
-serve -s build
+		Or 
+	//si se creo con npx create-react-app
+	npm run build
+	npm install -g serve
+	serve -s build
+-------------------------------------------------
+VARIABLES DE ENTORNO:
+ - Crear archivo con el nombre ".env" que contendrá las variables de entorno
+ - Instalar un modulo para interpretar las variables de entorno
+
+	npm i dotenv
+
+		.env
+			REACT_APP_API=http://www.omdbapi.com/?i=tt3896198&apikey=92152bb7
+		para usarla:
+			const API = process.env.REACT_APP_API;
+-------------------------------------------------
 
 

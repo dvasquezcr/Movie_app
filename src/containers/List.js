@@ -1,8 +1,10 @@
 import React, {Fragment} from 'react';
 import Card from "../components/Card/Card";
 
-//const UrlBase = "assets/data.json"
-const API ="http://www.omdbapi.com/?i=tt3896198&apikey=92152bb7"
+//const API = "assets/data.json" //Si usara los archivos desde local la ubicación debo darsela iniciando desde Public/index.html
+
+
+const API = process.env.REACT_APP_API;
 
 class List extends React.Component {
     constructor(props) {
