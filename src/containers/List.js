@@ -12,7 +12,7 @@ class List extends React.Component {
             data: [],
             searchTerm: "",
             error:"",
-            isFetch: true
+            loading: true
         }
     }
 
@@ -20,30 +20,42 @@ class List extends React.Component {
         const response = await fetch(`${API}&s=batman`)
         const responseJson = await response.json()
         //console.log(responseJson.Search)
-        this.setState ({ data: responseJson.Search, isFetch: false })
+        this.setState ({ data: responseJson.Search, loading: false })
 
         /* fetch("assets/data.json")
             .then(response => response.json())
-            .then(responseJson => this.setState ({ data: responseJson, isFetch: false }))
+            .then(responseJson => this.setState ({ data: responseJson, loading: false }))
             .catch(err => {
                 console.log("Error: " + err)}) */
     } 
 
 
     async handleSubmit(e){
+        
         e.preventDefault()
+        
         if(!this.state.searchTerm){
-            return this.setState({error: "Texto invalido"})
+            return this.setState({error: "Ingrese un texto valido"})
         }
         
         const res = await fetch(`${API}&s=${this.state.searchTerm}`)
         const data = await res.json()
-        //console.log(data.Search)
-        this.setState ({ data: data.Search, isFetch: false })
 
+        if (!data.Search){
+            return this.setState({error:"No hay resultados para: " + this.state.searchTerm, searchTerm: ""});
+        }
+        
+        this.setState({ data: data.Search, loading: false, error:"",searchTerm: "" })
     }
+
     render() {
         
+        const {data, loading} = this.state;
+
+        if(loading){
+            return <h3 className="text-light">Loading...</h3>
+        }
+
         return (
             <Fragment>
                 <div className="row">
@@ -51,6 +63,7 @@ class List extends React.Component {
                         <form onSubmit={(e) => this.handleSubmit(e)}>
                             <input type="text" className="form-control" placeholder="Search..."
                                     onChange={e => this.setState({searchTerm: e.target.value})}
+                                    value={this.state.searchTerm}
                                     autoFocus
                             />
                         </form>
@@ -59,7 +72,7 @@ class List extends React.Component {
                 </div>
                 <div className="row">
                 {
-                    this.state.data.map(movie => {
+                    data.map(movie => {
                         return <Card key={movie.imdbID} movie = {movie} />
                     })
                 }

@@ -1,8 +1,23 @@
+
 instalar Bootstrap -> variable 
 
-npm i bootswatch --save
+	npm i bootswatch --save
 
-En index.js 
-import "bootswatch/dist/lux/bootstrap.min.css";
+	En index.js 
+		import "bootswatch/dist/lux/bootstrap.min.css";
+		** en dist se encuentran todos los estilos distintos
 
-en dist se encuentran todos los estilos distintos
+Instalar Lint para verificar código de la APP
+	
+	npm i eslint
+
+Instalar PropTypes para validar
+	npm i prop-types
+
+Compilar
+	npm run production Or npm run build
+
+npm install -g serve
+serve -s build
+
+
