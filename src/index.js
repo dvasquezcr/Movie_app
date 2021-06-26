@@ -10,8 +10,8 @@ const App = () => {
     return(
 
         <Fragment>
-            <nav className="navbar navbar-dark bg-dark border-bottom border-white">
-                <a href="/" className="navbar-brand">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+                <a href="./" className="navbar-brand">
                     Movie App
                 </a>
             </nav>
